@@ -25,8 +25,8 @@ public class MainManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int max = PlayerPrefs.GetInt("maxScore");
-        print(max);
+        maxScore = PlayerPrefs.GetInt("maxScore");
+        
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
