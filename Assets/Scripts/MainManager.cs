@@ -18,10 +18,15 @@ public class MainManager : MonoBehaviour
     
     private bool m_GameOver = false;
 
+    public Text BestScore;
+    public Text nameText;
+    public int maxScore;
     
     // Start is called before the first frame update
     void Start()
     {
+        int max = PlayerPrefs.GetInt("maxScore");
+        print(max);
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         
@@ -36,10 +41,16 @@ public class MainManager : MonoBehaviour
                 brick.onDestroyed.AddListener(AddPoint);
             }
         }
+
+        nameText.text = IntroManager.playerName;
+        string bestscoretext = "Best Score : " + PlayerPrefs.GetInt("maxScore").ToString();
+        BestScore.text = bestscoretext;
+
     }
 
     private void Update()
     {
+
         if (!m_Started)
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -70,6 +81,12 @@ public class MainManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (m_Points > maxScore)
+        {
+            maxScore = m_Points;
+            PlayerPrefs.SetInt("maxScore", maxScore);
+            print("new max score");
+        }
         m_GameOver = true;
         GameOverText.SetActive(true);
     }
